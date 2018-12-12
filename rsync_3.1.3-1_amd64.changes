@@ -1,0 +1,26 @@
+Format: 1.8
+Date: Wed, 12 Dec 2018 01:53:16 +0100
+Source: rsync
+Binary: rsync
+Built-For-Profiles: nobiarch nocheck nodoc
+Architecture: amd64
+Version: 3.1.3-1
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Paul Slootman <paul@debian.org>
+Changed-By: Richard Yang <richard@yenforyang.com>
+Description:
+ rsync      - fast, versatile, remote (and local) file-copying tool
+Changes:
+ rsync (3.1.3-1) UNRELEASED; urgency=medium
+ .
+   * New upstream release
+Checksums-Sha1:
+ b44e4d6908eaff9969df92b0ec62c4c44c079383 3966 rsync_3.1.3-1_amd64.buildinfo
+ 85f5b213f8a4c53b7926fd4625afde8df0527c94 519748 rsync_3.1.3-1_amd64.deb
+Checksums-Sha256:
+ 2c8c7e9f80a3e17a8354ec313b4693a4dc44117a9b022f1947f2f7dd59cc4cf9 3966 rsync_3.1.3-1_amd64.buildinfo
+ de3d578f2ceaaa82ff6aa7a11da1d7c6046f23f5f55a2b9908c7ea358a50dc7d 519748 rsync_3.1.3-1_amd64.deb
+Files:
+ 2d4565d059a695a0441490638e8230da 3966 net optional rsync_3.1.3-1_amd64.buildinfo
+ bbb06b81ad22746e4a95be05915afcbb 519748 net optional rsync_3.1.3-1_amd64.deb

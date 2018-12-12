@@ -1,0 +1,36 @@
+Format: 1.8
+Date: Sat, 21 Jul 2018 21:44:31 +0800
+Source: rsync
+Binary: rsync
+Built-For-Profiles: nobiarch nocheck nodoc
+Architecture: amd64
+Version: 3.1.2-2.2
+Distribution: unstable
+Urgency: medium
+Maintainer: Paul Slootman <paul@debian.org>
+Changed-By: YunQiang Su <syq@debian.org>
+Description:
+ rsync      - fast, versatile, remote (and local) file-copying tool
+Closes: 866353 883048 887588 892968
+Changes:
+ rsync (3.1.2-2.2) unstable; urgency=medium
+ .
+   * Non-maintainer upload.
+   * Ignore --protect-args when already sent by client
+     (CVE-2018-5764) (Closes: #887588)
+ .
+   [Helmut Grohne]
+   * Fix Architecture field of cross built packages. (Closes: #866353)
+ .
+   [Aurelien Jarno]
+   * Update config.guess for new ports: mips*r6* and riscv64.
+     (Closes: #892968, #883048)
+Checksums-Sha1:
+ 8d26768364c12a8793558408aa90ae5972f923c5 3974 rsync_3.1.2-2.2_amd64.buildinfo
+ 5f2fdc12016587632706afe92220453a7883cbba 512064 rsync_3.1.2-2.2_amd64.deb
+Checksums-Sha256:
+ 59da3e224811a640ea1003a9c67541945c5f6a52bfeca3b8ff9c88eebcd6be27 3974 rsync_3.1.2-2.2_amd64.buildinfo
+ 7ef6fbbbbb644bfcea3f61f293634f20935aa9c75311917d568316099db11b53 512064 rsync_3.1.2-2.2_amd64.deb
+Files:
+ 2e318cba68b0291a4b95858d37099f71 3974 net optional rsync_3.1.2-2.2_amd64.buildinfo
+ c7ed973c9ea1bc362b4e88f34cce7957 512064 net optional rsync_3.1.2-2.2_amd64.deb

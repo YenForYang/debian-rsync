@@ -1,0 +1,19 @@
+--- progress.c	2015-12-30 08:33:38.268872577 +0100
++++ progress.c	2016-11-09 14:58:39.373429408 +0100
+@@ -25,6 +25,7 @@
+ 
+ extern int am_server;
+ extern int flist_eof;
++extern int quiet;
+ extern int need_unsorted_flist;
+ extern int output_needs_newline;
+ extern struct stats stats;
+@@ -127,7 +128,7 @@
+ 	pct = ofs == size ? 100 : (int) (100.0 * ofs / size);
+ 	rprintf(FCLIENT, "\r%15s %3d%% %7.2f%s %s%s",
+ 		human_num(ofs), pct, rate, units, rembuf, eol);
+-	if (!is_last) {
++	if (!is_last && !quiet) {
+ 		output_needs_newline = 1;
+ 		rflush(FCLIENT);
+ 	}

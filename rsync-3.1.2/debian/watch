@@ -1,0 +1,3 @@
+version=3
+http://rsync.samba.org/ftp/rsync/ rsync-([.0-9]+)\.tar\.gz
+pgpsigurlmangle=s/$/.asc/

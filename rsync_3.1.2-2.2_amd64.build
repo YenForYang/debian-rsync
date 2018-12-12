@@ -1,0 +1,640 @@
+ dpkg-buildpackage -D -us -uc -ui -b -Jauto -Pnobiarch,nocheck,nodoc
+dpkg-buildpackage: info: source package rsync
+dpkg-buildpackage: info: source version 3.1.2-2.2
+dpkg-buildpackage: info: source distribution unstable
+dpkg-buildpackage: info: source changed by YunQiang Su <syq@debian.org>
+ dpkg-source --before-build .
+dpkg-buildpackage: info: host architecture amd64
+ fakeroot debian/rules clean
+rm -f build-stamp
+rm -rf debian/buildtree
+rm -rf *~ debian/tmp debian/*~ debian/*.bak debian/files* debian/substvars
+FAKEROOTKEY=74056049 LD_LIBRARY_PATH=:/opt/intel/lib/intel64_lin:/opt/intel/tbb/lib/intel64/gcc4.7 LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libfakeroot/libfakeroot-sysv.so debian/rules clean
+ debian/rules build
+building build tree
+rm -rf debian/buildtree
+mkdir debian/buildtree
+cp -p * debian/buildtree || true
+cp: -r not specified; omitting directory '448'
+cp: -r not specified; omitting directory 'debian'
+cp: -r not specified; omitting directory 'doc'
+cp: -r not specified; omitting directory 'lib'
+cp: -r not specified; omitting directory 'm4'
+cp: -r not specified; omitting directory 'packaging'
+cp: -r not specified; omitting directory 'popt'
+cp: -r not specified; omitting directory 'support'
+cp: -r not specified; omitting directory 'testhelp'
+cp: -r not specified; omitting directory 'testsuite'
+cp: -r not specified; omitting directory 'true'
+cp: -r not specified; omitting directory 'zlib'
+cp -pr lib m4 popt support testsuite zlib debian/buildtree
+# update config.guess/sub
+cp /usr/share/misc/config.guess /usr/share/misc/config.sub debian/buildtree
+# work around newer autoconf stuff (runstatedir)
+touch debian/buildtree/aclocal.m4
+applying misc Debian patches
+for i in debian/patches/*.patch debian/patches/*.diff; do if [ -s $i ]; then echo "  $i ..."; cat $i | (cd debian/buildtree; patch -p1) || exit 1; fi; done
+  debian/patches/0001-Enforce-trailing-0-when-receiving-xattr-name-values.patch ...
+patching file xattrs.c
+Hunk #1 succeeded at 696 (offset -128 lines).
+  debian/patches/0002-Check-fname-in-recv_files-sooner.patch ...
+patching file receiver.c
+Hunk #1 succeeded at 580 (offset 6 lines).
+Hunk #2 succeeded at 657 (offset 6 lines).
+  debian/patches/0003-Sanitize-xname-in-read_ndx_and_attrs.patch ...
+patching file rsync.c
+  debian/patches/0004-Check-daemon-filter-against-fnamecmp-in-recv_files.patch ...
+patching file receiver.c
+Hunk #1 succeeded at 728 (offset 6 lines).
+  debian/patches/CVE-2018-5764.patch ...
+patching file options.c
+Hunk #1 succeeded at 1294 (offset -19 lines).
+Hunk #2 succeeded at 1904 (offset -31 lines).
+  debian/patches/backup-dir-implies-backup.diff ...
+patching file options.c
+Hunk #1 succeeded at 2126 (offset 5 lines).
+patching file rsync.yo
+  debian/patches/copy-devices.diff ...
+patching file generator.c
+patching file options.c
+Hunk #4 succeeded at 2771 (offset 6 lines).
+patching file rsync.c
+Hunk #2 succeeded at 411 (offset 6 lines).
+patching file sender.c
+  debian/patches/logdir.diff ...
+patching file support/rsyncstats
+  debian/patches/manpage-compress-level.diff ...
+patching file rsync.1
+patching file rsync.yo
+  debian/patches/noatime.diff ...
+patching file options.c
+Hunk #1 succeeded at 128 (offset 3 lines).
+Hunk #2 succeeded at 805 (offset 2 lines).
+Hunk #3 succeeded at 1026 (offset 5 lines).
+Hunk #4 succeeded at 2780 (offset 38 lines).
+patching file rsync.yo
+Hunk #1 succeeded at 457 (offset 3 lines).
+Hunk #2 succeeded at 2591 (offset 47 lines).
+patching file syscall.c
+  debian/patches/speedup-xattrs.diff ...
+patching file xattrs.c
+patching file xattrs.c
+Hunk #4 succeeded at 752 (offset -18 lines).
+patching file xattrs.c
+Hunk #9 succeeded at 794 (offset -18 lines).
+Hunk #10 succeeded at 920 (offset -18 lines).
+Hunk #11 succeeded at 952 (offset -18 lines).
+patching file hashtable.c
+patching file xattrs.c
+Hunk #7 succeeded at 884 (offset -18 lines).
+  debian/patches/ssh-6-option.diff ...
+patching file main.c
+Hunk #1 succeeded at 117 with fuzz 2 (offset 35 lines).
+Hunk #2 succeeded at 448 (offset 66 lines).
+  debian/patches/templines.diff ...
+patching file flist.c
+patching file progress.c
+  debian/patches/time-limit.diff ...
+patching file io.c
+patching file options.c
+Hunk #1 succeeded at 116 (offset 1 line).
+Hunk #2 succeeded at 795 (offset 3 lines).
+Hunk #3 succeeded at 826 (offset 4 lines).
+Hunk #4 succeeded at 1023 (offset 5 lines).
+Hunk #5 succeeded at 1798 (offset 7 lines).
+Hunk #6 succeeded at 2632 (offset 12 lines).
+patching file rsync.yo
+Hunk #2 succeeded at 2529 (offset 3 lines).
+patching file util.c
+patching file proto.h
+patching file rsync.1
+Hunk #2 succeeded at 2876 (offset 2 lines).
+# work around newer autoconf stuff (runstatedir)
+touch debian/buildtree/configure.sh debian/buildtree/config.h.in
+configuring
+(cd debian/buildtree; ./configure --with-included-zlib=yes --prefix=/usr --mandir='${prefix}/share/man' --build=x86_64-linux-gnu --host=x86_64-linux-gnu LDFLAGS="-Wl,-z,relro -Wl,-z,now -Wl,--as-needed,--gc-sections,--relax")
+configure.sh: loading site script /usr/share/config.site
+configure.sh: Configuring rsync 3.1.2
+checking build system type... (cached) x86_64-pc-linux-gnu
+checking host system type... (cached) x86_64-pc-linux-gnu
+checking whether to include debugging symbols... yes
+checking for x86_64-linux-gnu-gcc... (cached) icc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... (cached) o
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether icc accepts -g... (cached) yes
+checking for icc option to accept ISO C89... none needed
+checking how to run the C preprocessor... icc -E
+checking for grep that handles long lines and -e... (cached) /bin/grep
+checking for egrep... (cached) /bin/grep -E
+checking for a BSD-compatible install... /usr/bin/install
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for icc option to accept ISO C99... none needed
+checking for icc option to accept ISO Standard C... (cached) none needed
+checking for perl... (cached) /usr/bin/perl
+checking for remsh... 0
+checking for yodl2man... 1
+checking for sh... (cached) /bin/bash
+checking for fakeroot... (cached) /usr/bin/fakeroot
+checking the group for user "nobody"... nogroup
+checking for broken largefile support... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking ipv6 stack type... linux-glibc
+checking for library containing getaddrinfo... none required
+checking whether to call shutdown on all sockets... no
+checking for ANSI C header files... (cached) yes
+checking for sys/types.h... (cached) yes
+checking for sys/stat.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking for memory.h... (cached) yes
+checking for strings.h... (cached) yes
+checking for inttypes.h... (cached) yes
+checking for stdint.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking whether byte ordering is bigendian... (cached) no
+checking for dirent.h that defines DIR... (cached) yes
+checking for library containing opendir... none required
+checking whether time.h and sys/time.h may both be included... (cached) yes
+checking for sys/wait.h that is POSIX.1 compatible... (cached) yes
+checking for sys/fcntl.h... (cached) yes
+checking for sys/select.h... (cached) yes
+checking for fcntl.h... (cached) yes
+checking for sys/time.h... (cached) yes
+checking for sys/unistd.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for utime.h... (cached) yes
+checking for grp.h... (cached) yes
+checking compat.h usability... no
+checking compat.h presence... no
+checking for compat.h... no
+checking for sys/param.h... (cached) yes
+checking for ctype.h... (cached) yes
+checking for sys/wait.h... (cached) yes
+checking for sys/ioctl.h... (cached) yes
+checking sys/filio.h usability... no
+checking sys/filio.h presence... no
+checking for sys/filio.h... no
+checking for string.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking sys/mode.h usability... no
+checking sys/mode.h presence... no
+checking for sys/mode.h... no
+checking for sys/un.h... (cached) yes
+checking sys/attr.h usability... no
+checking sys/attr.h presence... no
+checking for sys/attr.h... no
+checking for mcheck.h... (cached) yes
+checking for arpa/inet.h... (cached) yes
+checking for arpa/nameser.h... (cached) yes
+checking for locale.h... (cached) yes
+checking for netdb.h... (cached) yes
+checking for malloc.h... (cached) yes
+checking for float.h... (cached) yes
+checking for limits.h... (cached) yes
+checking for iconv.h... (cached) yes
+checking libcharset.h usability... no
+checking libcharset.h presence... no
+checking for libcharset.h... no
+checking for langinfo.h... (cached) yes
+checking for sys/acl.h... (cached) yes
+checking for acl/libacl.h... (cached) yes
+checking for attr/xattr.h... (cached) yes
+checking for sys/xattr.h... (cached) yes
+checking sys/extattr.h usability... no
+checking sys/extattr.h presence... no
+checking for sys/extattr.h... no
+checking for popt.h... (cached) yes
+checking popt/popt.h usability... no
+checking popt/popt.h presence... no
+checking for popt/popt.h... no
+checking for linux/falloc.h... (cached) yes
+checking for netinet/in_systm.h... (cached) yes
+checking for netinet/ip.h... (cached) yes
+checking for zlib.h... (cached) yes
+checking whether sys/types.h defines makedev... (cached) yes
+checking if makedev takes 3 args... no
+checking size of int... (cached) 4
+checking size of long... (cached) 8
+checking size of long long... 8
+checking size of short... (cached) 2
+checking size of int16_t... 2
+checking size of uint16_t... 2
+checking size of int32_t... 4
+checking size of uint32_t... 4
+checking size of int64_t... 8
+checking size of off_t... (cached) 8
+checking size of off64_t... 8
+checking size of time_t... (cached) 8
+checking for inline... (cached) inline
+checking for long double with more range or precision than double... (cached) yes
+checking for uid_t in sys/types.h... (cached) yes
+checking for mode_t... (cached) yes
+checking for off_t... (cached) yes
+checking for size_t... (cached) yes
+checking for pid_t... (cached) yes
+checking for id_t... (cached) yes
+checking type of array argument to getgroups... (cached) gid_t
+checking for struct stat.st_rdev... (cached) yes
+checking for struct stat.st_mtimensec... no
+checking for struct stat.st_mtim.tv_nsec... (cached) yes
+checking for socklen_t... (cached) yes
+checking for errno in errno.h... yes
+checking for connect... (cached) yes
+checking for library containing inet_ntop... none required
+checking for library containing iconv_open... none required
+checking for library containing libiconv_open... no
+checking for iconv declaration... 
+         extern size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);
+checking for inet_ntop... (cached) yes
+checking for inet_pton... (cached) yes
+checking for struct addrinfo... (cached) yes
+checking for struct sockaddr_storage... (cached) yes
+checking whether defines needed by getaddrinfo exist... yes
+checking for getaddrinfo... (cached) yes
+checking for struct sockaddr.sa_len... no
+checking for struct sockaddr_in.sin_len... no
+checking for struct sockaddr_un.sun_len... no
+checking for struct sockaddr_in6.sin6_scope_id... yes
+checking for struct stat64... yes
+checking for strcasecmp... (cached) yes
+checking for aclsort... no
+checking for aclsort in -lsec... no
+checking for utime.h... (cached) yes
+checking whether utime accepts a null argument... (cached) yes
+checking for size_t... (cached) yes
+checking for working alloca.h... (cached) yes
+checking for alloca... (cached) yes
+checking for waitpid... (cached) yes
+checking for wait4... yes
+checking for getcwd... (cached) yes
+checking for strdup... (cached) yes
+checking for chown... (cached) yes
+checking for chmod... (cached) yes
+checking for lchmod... no
+checking for mknod... (cached) yes
+checking for mkfifo... (cached) yes
+checking for fchmod... (cached) yes
+checking for fstat... (cached) yes
+checking for ftruncate... (cached) yes
+checking for strchr... (cached) yes
+checking for readlink... (cached) yes
+checking for link... (cached) yes
+checking for utime... (cached) yes
+checking for utimes... (cached) yes
+checking for lutimes... (cached) yes
+checking for strftime... (cached) yes
+checking for memmove... (cached) yes
+checking for lchown... (cached) yes
+checking for vsnprintf... (cached) yes
+checking for snprintf... (cached) yes
+checking for vasprintf... (cached) yes
+checking for asprintf... (cached) yes
+checking for setsid... (cached) yes
+checking for strpbrk... (cached) yes
+checking for strlcat... no
+checking for strlcpy... no
+checking for strtol... (cached) yes
+checking for mallinfo... (cached) yes
+checking for getgroups... (cached) yes
+checking for setgroups... (cached) yes
+checking for geteuid... (cached) yes
+checking for getegid... (cached) yes
+checking for setlocale... (cached) yes
+checking for setmode... no
+checking for open64... yes
+checking for lseek64... yes
+checking for mkstemp64... yes
+checking for mtrace... (cached) yes
+checking for va_copy... no
+checking for __va_copy... no
+checking for seteuid... (cached) yes
+checking for strerror... (cached) yes
+checking for putenv... (cached) yes
+checking for iconv_open... (cached) yes
+checking for locale_charset... no
+checking for nl_langinfo... (cached) yes
+checking for getxattr... (cached) yes
+checking for extattr_get_link... no
+checking for sigaction... (cached) yes
+checking for sigprocmask... (cached) yes
+checking for setattrlist... no
+checking for getgrouplist... (cached) yes
+checking for initgroups... (cached) yes
+checking for utimensat... (cached) yes
+checking for posix_fallocate... (cached) yes
+checking for attropen... no
+checking for setvbuf... (cached) yes
+checking for usleep... (cached) yes
+checking for useable fallocate... yes
+checking for SYS_fallocate... yes
+checking whether posix_fallocate is efficient... no
+checking for getpgrp... (cached) yes
+checking for tcgetpgrp... (cached) yes
+checking whether getpgrp requires zero arguments... no
+checking whether chown() modifies symlinks... no
+checking whether link() can hard-link symlinks... yes
+checking whether link() can hard-link special files... yes
+checking for working socketpair... yes
+checking for getpass... (cached) yes
+checking for poptGetContext in -lpopt... (cached) yes
+checking whether to use included libpopt... no
+checking whether to use included zlib... ./zlib
+checking for unsigned char... yes
+checking for broken readdir... no
+checking for utimbuf... yes
+checking if gettimeofday takes tz argument... yes
+checking for C99 vsnprintf... yes
+checking for secure mkstemp... yes
+checking if mknod creates FIFOs... yes
+checking if mknod creates sockets... yes
+checking whether -c -o works... yes
+checking for stunnel... (cached) /usr/bin/stunnel
+checking for stunnel4... /usr/bin/stunnel4
+checking for _acl... no
+checking for __acl... no
+checking for _facl... no
+checking for __facl... no
+checking whether to support ACLs... running tests:
+checking for acl_get_file in -lacl... (cached) yes
+checking for ACL support... (cached) yes
+checking ACL test results... Using posix ACLs
+checking for acl_get_perm_np... no
+checking whether to support extended attributes... Using Linux xattrs
+checking for getxattr in -lattr... (cached) yes
+configure.sh: creating ./config.status
+config.status: creating Makefile
+config.status: creating lib/dummy
+config.status: creating zlib/dummy
+config.status: creating popt/dummy
+config.status: creating shconfig
+config.status: creating config.h
+
+    rsync 3.1.2 configuration successful
+
+building
+/usr/bin/make --directory=debian/buildtree CFLAGS="-Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe" CPPFLAGS="-Izlib -Wdate-time -D_FORTIFY_SOURCE=2" LDFLAGS="-Wl,-z,relro -Wl,-z,now -Wl,--as-needed,--gc-sections,--relax" all
+make[1]: Entering directory '/home/richard/debs/rsync/rsync-3.1.2/debian/buildtree'
+perl ./mkproto.pl ./*.c ./lib/compat.c
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c flist.c -o flist.o
+flist.c(458): warning #1028: unknown warning specifier
+  			if ((uint32)major(rdev) == rdev_major)
+  			            ^
+
+flist.c(461): warning #1028: unknown warning specifier
+  				rdev_major = major(rdev);
+  				             ^
+
+flist.c(462): warning #1028: unknown warning specifier
+  			if (protocol_version < 30 && (uint32)minor(rdev) <= 0xFFu)
+  			                                     ^
+
+flist.c(471): warning #1028: unknown warning specifier
+  			rdev = MAKEDEV(major(rdev), 0);
+  			       ^
+
+flist.c(471): warning #1028: unknown warning specifier
+  			rdev = MAKEDEV(major(rdev), 0);
+  			       ^
+
+flist.c(477): warning #1028: unknown warning specifier
+  		rdev = MAKEDEV(0, 0);
+  		       ^
+
+flist.c(621): warning #1028: unknown warning specifier
+  				write_varint30(f, major(rdev));
+  				                  ^
+
+flist.c(623): warning #1028: unknown warning specifier
+  				write_varint(f, minor(rdev));
+  				                ^
+
+flist.c(625): warning #1028: unknown warning specifier
+  				write_byte(f, minor(rdev));
+  				              ^
+
+flist.c(627): warning #1028: unknown warning specifier
+  				write_int(f, minor(rdev));
+  				             ^
+
+flist.c(792): warning #1028: unknown warning specifier
+  				rdev = MAKEDEV(DEV_MAJOR(devp), DEV_MINOR(devp));
+  				       ^
+
+flist.c(867): warning #1028: unknown warning specifier
+  			rdev = MAKEDEV(rdev_major, rdev_minor);
+  			       ^
+
+flist.c(873): warning #1028: unknown warning specifier
+  		rdev = MAKEDEV(0, 0);
+  		       ^
+
+flist.c(1030): warning #1028: unknown warning specifier
+  		DEV_MAJOR(devp) = major(rdev);
+  		                  ^
+
+flist.c(1031): warning #1028: unknown warning specifier
+  		DEV_MINOR(devp) = minor(rdev);
+  		                  ^
+
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c rsync.c -o rsync.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c generator.c -o generator.o
+generator.c(1046): warning #1028: unknown warning specifier
+  			if (sxp->st.st_rdev != MAKEDEV(DEV_MAJOR(devp), DEV_MINOR(devp)))
+  			                       ^
+
+generator.c(1473): warning #1028: unknown warning specifier
+  				DEV_MAJOR(devp) = major(real_sx.st.st_dev);
+  				                  ^
+
+generator.c(1474): warning #1028: unknown warning specifier
+  				DEV_MINOR(devp) = minor(real_sx.st.st_dev);
+  				                  ^
+
+generator.c(1555): warning #1028: unknown warning specifier
+  		if (atomic_create(file, fname, sl, NULL, MAKEDEV(0, 0), &sx, statret == 0 ? DEL_FOR_SYMLINK : 0)) {
+  		                                         ^
+
+generator.c(1585): warning #1028: unknown warning specifier
+  			rdev = MAKEDEV(DEV_MAJOR(devp), DEV_MINOR(devp));
+  			       ^
+
+generator.c(1634): warning #1028: unknown warning specifier
+  				(long)major(rdev), (long)minor(rdev));
+  				      ^
+
+generator.c(1634): warning #1028: unknown warning specifier
+  				(long)major(rdev), (long)minor(rdev));
+  				                         ^
+
+generator.c(2251): warning #1028: unknown warning specifier
+  						dirdev = MAKEDEV(DEV_MAJOR(devp), DEV_MINOR(devp));
+  						         ^
+
+generator.c(2253): warning #1028: unknown warning specifier
+  						dirdev = MAKEDEV(0, 0);
+  						         ^
+
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c receiver.c -o receiver.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c cleanup.c -o cleanup.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c sender.c -o sender.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c exclude.c -o exclude.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c util.c -o util.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c util2.c -o util2.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c main.c -o main.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c checksum.c -o checksum.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c match.c -o match.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c syscall.c -o syscall.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c log.c -o log.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c backup.c -o backup.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c delete.c -o delete.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c options.c -o options.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c io.c -o io.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c compat.c -o compat.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c hlink.c -o hlink.o
+hlink.c(234): warning #1028: unknown warning specifier
+  	if (atomic_create(file, fname, NULL, oldname, MAKEDEV(0, 0), sxp, statret == 0 ? DEL_FOR_FILE : 0)) {
+  	                                              ^
+
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c token.c -o token.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c uidlist.c -o uidlist.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c socket.c -o socket.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c hashtable.c -o hashtable.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c fileio.c -o fileio.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c batch.c -o batch.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c clientname.c -o clientname.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c chmod.c -o chmod.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c acls.c -o acls.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c xattrs.c -o xattrs.o
+xattrs.c(1150): warning #1028: unknown warning specifier
+  	xst->st_rdev = MAKEDEV(rdev_major, rdev_minor);
+  	               ^
+
+xattrs.c(1183): warning #1028: unknown warning specifier
+  		rdev = MAKEDEV(DEV_MAJOR(devp), DEV_MINOR(devp));
+  		       ^
+
+xattrs.c(1212): warning #1028: unknown warning specifier
+  			(int)major(rdev), (int)minor(rdev),
+  			     ^
+
+xattrs.c(1212): warning #1028: unknown warning specifier
+  			(int)major(rdev), (int)minor(rdev),
+  			                       ^
+
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c progress.c -o progress.o
+progress.c(176): warning #140: too many arguments in function call
+  		pgrp = getpgrp(GETPGRP_ARG);
+  		               ^
+
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c pipe.c -o pipe.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c params.c -o params.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c loadparm.c -o loadparm.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c clientserver.c -o clientserver.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c access.c -o access.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c connection.c -o connection.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c authenticate.c -o authenticate.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/wildmatch.c -o lib/wildmatch.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/compat.c -o lib/compat.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/snprintf.c -o lib/snprintf.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/mdfour.c -o lib/mdfour.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/md5.c -o lib/md5.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/permstring.c -o lib/permstring.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/pool_alloc.c -o lib/pool_alloc.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/sysacls.c -o lib/sysacls.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c lib/sysxattrs.c -o lib/sysxattrs.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/deflate.c -o zlib/deflate.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/inffast.c -o zlib/inffast.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/inflate.c -o zlib/inflate.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/inftrees.c -o zlib/inftrees.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/trees.c -o zlib/trees.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/zutil.c -o zlib/zutil.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/adler32.c -o zlib/adler32.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/compress.c -o zlib/compress.o
+icc -I. -I. -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Izlib -Wdate-time -D_FORTIFY_SOURCE=2 -c zlib/crc32.c -o zlib/crc32.o
+icc -Wall  -g -O2 -fdebug-prefix-map=/home/richard/debs/rsync/rsync-3.1.2=. -fstack-protector-strong -Wformat -Werror=format-security -march=native -pipe -Wl,-z,relro -Wl,-z,now -Wl,--as-needed,--gc-sections,--relax -o rsync flist.o rsync.o generator.o receiver.o cleanup.o sender.o exclude.o util.o util2.o main.o checksum.o match.o syscall.o log.o backup.o delete.o options.o io.o compat.o hlink.o token.o uidlist.o socket.o hashtable.o fileio.o batch.o clientname.o chmod.o acls.o xattrs.o progress.o pipe.o params.o loadparm.o clientserver.o access.o connection.o authenticate.o lib/wildmatch.o lib/compat.o lib/snprintf.o lib/mdfour.o lib/md5.o lib/permstring.o lib/pool_alloc.o lib/sysacls.o lib/sysxattrs.o  zlib/deflate.o zlib/inffast.o zlib/inflate.o zlib/inftrees.o zlib/trees.o zlib/zutil.o zlib/adler32.o zlib/compress.o zlib/crc32.o  -lattr -lacl -lpopt 
+sed 's;\@bindir\@;/usr/bin;g' <./rsync-ssl.in >rsync-ssl
+sed 's;\@stunnel4\@;/usr/bin/stunnel4;g' <./stunnel-rsync.in >stunnel-rsync
+sed 's;\@bindir\@;/usr/bin;g' <./stunnel-rsyncd.conf.in >stunnel-rsyncd.conf
+make[1]: Leaving directory '/home/richard/debs/rsync/rsync-3.1.2/debian/buildtree'
+touch build-stamp
+done
+ fakeroot debian/rules binary
+rm -rf debian/tmp
+install -p -d -o root -g root  -m  755 	debian/tmp \
+		debian/tmp/DEBIAN \
+		debian/tmp/usr/bin \
+		debian/tmp/usr/share/doc/rsync/examples \
+		debian/tmp/usr/share/doc/rsync/scripts \
+		debian/tmp/usr/share/man/man1 \
+		debian/tmp/usr/share/man/man5 \
+		debian/tmp/usr/share/lintian/overrides \
+		debian/tmp/lib/systemd/system \
+		debian/tmp/etc \
+		debian/tmp/etc/default \
+		debian/tmp/etc/init.d
+# debian/tmp/usr/lib/debian-test/tests
+/usr/bin/make --directory=debian/buildtree install-strip prefix=`pwd`/debian/tmp/usr exec_prefix=`pwd`/debian/tmp/usr 
+make[1]: Entering directory '/home/richard/debs/rsync/rsync-3.1.2/debian/buildtree'
+/usr/bin/make INSTALL_STRIP='-s' install
+make[2]: Entering directory '/home/richard/debs/rsync/rsync-3.1.2/debian/buildtree'
+/bin/mkdir -p /home/richard/debs/rsync/rsync-3.1.2/debian/tmp/usr/bin
+/usr/bin/install -s -m 755 rsync /home/richard/debs/rsync/rsync-3.1.2/debian/tmp/usr/bin
+/bin/mkdir -p /home/richard/debs/rsync/rsync-3.1.2/debian/tmp/usr/share/man/man1
+/bin/mkdir -p /home/richard/debs/rsync/rsync-3.1.2/debian/tmp/usr/share/man/man5
+if test -f rsync.1; then /usr/bin/install -m 644 rsync.1 /home/richard/debs/rsync/rsync-3.1.2/debian/tmp/usr/share/man/man1; fi
+if test -f rsyncd.conf.5; then /usr/bin/install -m 644 rsyncd.conf.5 /home/richard/debs/rsync/rsync-3.1.2/debian/tmp/usr/share/man/man5; fi
+make[2]: Leaving directory '/home/richard/debs/rsync/rsync-3.1.2/debian/buildtree'
+make[1]: Leaving directory '/home/richard/debs/rsync/rsync-3.1.2/debian/buildtree'
+strip --remove-section=.comment --remove-section=.note debian/tmp/usr/bin/rsync
+install -p    -o root -g root  -m  644 debian/changelog debian/tmp/usr/share/doc/rsync/changelog.Debian
+install -p    -o root -g root  -m  644 README tech_report.tex debian/tmp/usr/share/doc/rsync/
+install -p    -o root -g root  -m  644 TODO                   debian/tmp/usr/share/doc/rsync/
+install -p    -o root -g root  -m  644 NEWS                   debian/tmp/usr/share/doc/rsync/changelog
+install -p    -o root -g root  -m  644 packaging/cull_options debian/tmp/usr/share/doc/rsync/scripts/
+install -p    -o root -g root  -m  644 support/atomic-rsync support/cvs2includes support/file-attr-restore support/files-to-excludes support/git-set-file-times support/logfilter support/lsh support/mnt-excl support/munge-symlinks support/rrsync support/rsyncstats debian/tmp/usr/share/doc/rsync/scripts/
+install -p    -o root -g root  -m  644 debian/README.Debian   debian/tmp/usr/share/doc/rsync/
+echo -e '\n\f' >> debian/tmp/usr/share/doc/rsync/changelog
+cat OLDNEWS    >> debian/tmp/usr/share/doc/rsync/changelog
+gzip -9frn `find debian/tmp/usr/share/doc/ debian/tmp/usr/share/man/ -type f`
+install -p    -o root -g root  -m  644 debian/rsyncd.conf debian/logrotate.conf.rsync debian/tmp/usr/share/doc/rsync/examples/
+install -p    -o root -g root  -m  644 debian/copyright debian/tmp/usr/share/doc/rsync/
+# install -p    -o root -g root  -m  755 test.sh debian/tmp/usr/lib/debian-test/tests/rsync
+install -p    -o root -g root  -m  755 debian/postinst debian/tmp/DEBIAN/
+install -p    -o root -g root  -m  755 debian/prerm    debian/tmp/DEBIAN/
+install -p    -o root -g root  -m  755 debian/postrm   debian/tmp/DEBIAN/
+install -p    -o root -g root  -m  644 packaging/systemd/rsync.service debian/tmp/lib/systemd/system/
+install -p    -o root -g root  -m  644 debian/default  debian/tmp/etc/default/rsync
+install -p    -o root -g root  -m  755 debian/init.d debian/tmp/etc/init.d/rsync
+install -p    -o root -g root  -m  644 debian/lintian.overrides  debian/tmp/usr/share/lintian/overrides/rsync
+(cd debian/tmp; find ./etc -type f | sed s,.,,) > debian/tmp/DEBIAN/conffiles
+(cd debian/tmp; find lib usr -type f -print0 | xargs -0 md5sum) > debian/tmp/DEBIAN/md5sums
+dpkg-shlibdeps debian/tmp/usr/bin/rsync
+dpkg-shlibdeps: warning: deprecated use of LD_LIBRARY_PATH with private library directory which interferes with cross-building, please use -l option instead
+dpkg-shlibdeps: warning: can't extract name and version from library name 'libiomp5.so'
+dpkg-shlibdeps: warning: can't extract name and version from library name 'libiomp5.so'
+dpkg-shlibdeps: warning: can't extract name and version from library name 'libiomp5.so'
+dpkg-shlibdeps: warning: can't extract name and version from library name 'libiomp5.so'
+dpkg-shlibdeps: warning: package could avoid a useless dependency if debian/tmp/usr/bin/rsync was not linked against libgcc_s.so.1 (it uses none of the library's symbols)
+dpkg-shlibdeps: warning: package could avoid a useless dependency if debian/tmp/usr/bin/rsync was not linked against libdl.so.2 (it uses none of the library's symbols)
+dpkg-gencontrol -isp
+dpkg-gencontrol: warning: -isp is deprecated; it is without effect
+chown -R root.root debian/tmp
+chmod -R go=rX debian/tmp
+dpkg --build debian/tmp ..
+dpkg-deb: building package 'rsync' in '../rsync_3.1.2-2.2_amd64.deb'.
+FAKEROOTKEY=2121024532 LD_LIBRARY_PATH=:/opt/intel/lib/intel64_lin:/opt/intel/tbb/lib/intel64/gcc4.7 LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libfakeroot/libfakeroot-sysv.so debian/rules binary
+ dpkg-genbuildinfo --build=binary
+ dpkg-genchanges --build=binary >../rsync_3.1.2-2.2_amd64.changes
+dpkg-genchanges: info: binary-only upload (no source code included)
+ dpkg-source --after-build .
+dpkg-buildpackage: info: binary-only upload (no source included)
+Now running lintian rsync_3.1.2-2.2_amd64.changes ...
+W: rsync: hardening-no-pie usr/bin/rsync
+N: 2 tags overridden (2 info); 1 unused override
+Finished running lintian.
